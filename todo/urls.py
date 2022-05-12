@@ -20,6 +20,7 @@ from todo import home_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('__debug__/', include('debug_toolbar.urls')),
     path('tarefas/', include('todo.tarefas.urls')),
     path('', home_view.home, name='home'),
 ]

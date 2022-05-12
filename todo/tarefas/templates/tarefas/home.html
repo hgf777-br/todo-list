@@ -24,12 +24,12 @@
                         {% csrf_token %}
                         <div class="input-group">
                             <input
-                                type="text"
-                                name="nome"
-                                class="form-control"
-                                placeholder="Descreva sua tarefa"
-                                aria-label="Descreva sua tarefa"
-                                aria-describedby="button-addon2"
+                            type="text"
+                            name="nome"
+                            class="form-control"
+                            placeholder="Descreva sua tarefa"
+                            aria-label="Descreva sua tarefa"
+                            aria-describedby="button-addon2"
                             />
                             <button type="submit"
                             class="btn btn-outline-primary"
@@ -40,6 +40,17 @@
                         </div>
                         <small class="form-text text-danger">{{ form.nome.errors }}</small>
                     </form>
+                    <h3 class="my-3 pt-2 border-top">Tarefas Pendentes</h3>
+                    {% for tarefa in tarefas_pendentes %}
+                        <form action="">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{ tarefa.id }}" id="{{ tarefa.id }}">
+                                <label class="form-check-label" for="{{ tarefa.id }}">
+                                    {{ tarefa.nome }}
+                                </label>
+                            </div>
+                        </form>
+                    {% endfor %}
                 </div>
             </div>
         </div>

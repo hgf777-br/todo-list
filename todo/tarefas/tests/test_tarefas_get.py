@@ -1,11 +1,12 @@
 from django.test import Client
 from django.urls import reverse
 from pytest_django.asserts import assertContains, assertHTMLEqual
+from todo.tarefas.models import Tarefa
 import pytest
 
 
 @pytest.fixture
-def resposta(client: Client):
+def resposta(client: Client, db):
     return client.get(reverse('tarefas:home'))
 
 
@@ -19,3 +20,22 @@ def test_formulario_presente(resposta):
 
 def test_botao_submit(resposta):
     assertContains(resposta, '<button type="submit"')
+
+@pytest.fixture
+def lista_tarefas_pendentes(db):
+    tarefas =  [
+        Tarefa(nome='Tarefa 1', feita=False),
+        Tarefa(nome='Tarefa 2', feita=False)
+    ]
+    
+    Tarefa.objects.bulk_create(tarefas)
+    return tarefas
+    
+@pytest.fixture
+def resposta_com_lista_tarefas(client, lista_tarefas_pendentes):
+    return client.get(reverse('tarefas:home'))
+
+
+def test_lista_tarefas_pendentes_presente(resposta_com_lista_tarefas, lista_tarefas_pendentes):
+    for tarefa in lista_tarefas_pendentes:
+        assertContains(resposta_com_lista_tarefas, tarefa.nome)
