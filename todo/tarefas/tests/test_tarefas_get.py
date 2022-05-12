@@ -18,4 +18,4 @@ def test_formulario_presente(resposta):
 
 
 def test_botao_submit(resposta):
-    assertContains(resposta, '<button type="button"')
+    assertContains(resposta, '<button type="submit"')
