@@ -21,21 +21,39 @@ def test_formulario_presente(resposta):
 def test_botao_submit(resposta):
     assertContains(resposta, '<button type="submit"')
 
+
 @pytest.fixture
 def lista_tarefas_pendentes(db):
-    tarefas =  [
+    tarefas = [
         Tarefa(nome='Tarefa 1', feita=False),
         Tarefa(nome='Tarefa 2', feita=False)
     ]
-    
+
     Tarefa.objects.bulk_create(tarefas)
     return tarefas
-    
+
+
 @pytest.fixture
-def resposta_com_lista_tarefas(client, lista_tarefas_pendentes):
+def lista_tarefas_concluidas(db):
+    tarefas = [
+        Tarefa(nome='Tarefa 3', feita=True),
+        Tarefa(nome='Tarefa 4', feita=True)
+    ]
+
+    Tarefa.objects.bulk_create(tarefas)
+    return tarefas
+
+
+@pytest.fixture
+def resposta_com_lista_tarefas(client, lista_tarefas_pendentes, lista_tarefas_concluidas):
     return client.get(reverse('tarefas:home'))
 
 
 def test_lista_tarefas_pendentes_presente(resposta_com_lista_tarefas, lista_tarefas_pendentes):
     for tarefa in lista_tarefas_pendentes:
+        assertContains(resposta_com_lista_tarefas, tarefa.nome)
+
+
+def test_lista_tarefas_concluidas_presente(resposta_com_lista_tarefas, lista_tarefas_concluidas):
+    for tarefa in lista_tarefas_concluidas:
         assertContains(resposta_com_lista_tarefas, tarefa.nome)

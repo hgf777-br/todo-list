@@ -13,6 +13,7 @@
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
             crossorigin="anonymous"
         />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <link rel="stylesheet" href="" />
     </head>
     <body>
@@ -29,7 +30,6 @@
                             class="form-control"
                             placeholder="Descreva sua tarefa"
                             aria-label="Descreva sua tarefa"
-                            aria-describedby="button-addon2"
                             />
                             <button type="submit"
                             class="btn btn-outline-primary"
@@ -42,12 +42,57 @@
                     </form>
                     <h3 class="my-3 pt-2 border-top">Tarefas Pendentes</h3>
                     {% for tarefa in tarefas_pendentes %}
-                        <form action="">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{ tarefa.id }}" id="{{ tarefa.id }}">
-                                <label class="form-check-label" for="{{ tarefa.id }}">
-                                    {{ tarefa.nome }}
-                                </label>
+                        <form action={% url 'tarefas:detalhe' tarefa_id=tarefa.id %} method='post'>
+                            {% csrf_token %}
+                            <div class="input-group mb-1">
+                                <input
+                                type="text"
+                                name="nome"
+                                class="form-control"
+                                placeholder=""
+                                value="{{ tarefa.nome }}"
+                                aria-label="Tarefa na lista"
+                                required="required"
+                                />
+                                <input 
+                                type="hidden"
+                                value="checked"
+                                name="feita"
+                                />
+                                <button type="submit"
+                                class="btn btn-outline-success"
+                                id="button-check-{{ tarefa.id }}"
+                                >
+                                    <em class="bi-check2"></em>
+                                </button>
+                            </div>
+                        </form>
+                    {% endfor %}
+                    <h3 class="my-3 pt-2 border-top">Tarefas Concluídas</h3>
+                    {% for tarefa in tarefas_concluidas %}
+                        <form action={% url 'tarefas:detalhe' tarefa_id=tarefa.id %} method='post'>
+                            {% csrf_token %}
+                            <div class="input-group mb-1">
+                                <input
+                                type="text"
+                                name="nome"
+                                class="form-control"
+                                placeholder=""
+                                value="{{ tarefa.nome }}"
+                                aria-label="Tarefa na lista"
+                                required="required"
+                                />
+                                <input 
+                                type="hidden"
+                                value=""
+                                name="feita"
+                                />
+                                <button type="submit"
+                                class="btn btn-outline-danger"
+                                id="button-uncheck-{{ tarefa.id }}"
+                                >
+                                    <em class="bi-x-lg"></em>
+                                </button>
                             </div>
                         </form>
                     {% endfor %}
