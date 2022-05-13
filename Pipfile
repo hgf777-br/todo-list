@@ -7,6 +7,9 @@ name = "pypi"
 django = "*"
 gunicorn = "*"
 django-debug-toolbar = "*"
+whitenoise = "*"
+dj-database-url = "*"
+psycopg2 = "*"
 
 [dev-packages]
 pytest-django = "*"

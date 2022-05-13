@@ -59,9 +59,15 @@
                                 value="checked"
                                 name="feita"
                                 />
+                                <a href="apagar/{{ tarefa.id }}"
+                                class="btn btn-outline-danger"
+                                id="delete-{{ tarefa.id }}"
+                                >
+                                    <em class="bi-trash"></em>
+                                </a>
                                 <button type="submit"
                                 class="btn btn-outline-success"
-                                id="button-check-{{ tarefa.id }}"
+                                id="check-{{ tarefa.id }}"
                                 >
                                     <em class="bi-check2"></em>
                                 </button>
@@ -88,7 +94,7 @@
                                 name="feita"
                                 />
                                 <button type="submit"
-                                class="btn btn-outline-danger"
+                                class="btn btn-outline-warning"
                                 id="button-uncheck-{{ tarefa.id }}"
                                 >
                                     <em class="bi-x-lg"></em>
@@ -105,6 +111,8 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"
         ></script>
-        <script src="" async defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+        </script>
     </body>
 </html>
